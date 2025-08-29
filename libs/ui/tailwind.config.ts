@@ -4,12 +4,6 @@ export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  safelist: [
-    {
-      // Allow all classes, because we don't know which classes are used in the consumer
-      pattern: /./,
-    }
-  ],
   theme: {
     extend: {
       colors: {

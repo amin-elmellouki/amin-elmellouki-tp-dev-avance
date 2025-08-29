@@ -1,6 +1,6 @@
 {
   "name": "realtime-elo-ranker-api-mock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple mock server for the Realtime Elo Ranker API to provide basic functions for client development",
   "scripts": {
     "start": "mocks-server"
@@ -8,6 +8,6 @@
   "keywords": [],
   "author": "Thibaud FAURIE",
   "devDependencies": {
-    "@mocks-server/main": "^4.1.0"
+    "@mocks-server/main": "catalog:"
   }
 }

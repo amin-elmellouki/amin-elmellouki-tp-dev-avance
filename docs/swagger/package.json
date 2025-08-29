@@ -1,6 +1,6 @@
 {
   "name": "swagger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "author": "",
@@ -9,13 +9,13 @@
   },
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "express": "catalog:",
+    "swagger-ui-express": "catalog:",
+    "yamljs": "catalog:"
   },
   "devDependencies": {
-    "connect-livereload": "^0.6.1",
-    "livereload": "^0.9.3",
-    "nodemon": "^3.1.9"
+    "connect-livereload": "catalog:",
+    "livereload": "catalog:",
+    "nodemon": "catalog:"
   }
 }
