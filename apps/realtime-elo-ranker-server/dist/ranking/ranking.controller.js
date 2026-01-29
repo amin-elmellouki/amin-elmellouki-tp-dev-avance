@@ -16,23 +16,31 @@ exports.RankingController = void 0;
 const common_1 = require("@nestjs/common");
 const event_emitter_1 = require("@nestjs/event-emitter");
 const rxjs_1 = require("rxjs");
+const ranking_cache_service_1 = require("./ranking-cache/ranking-cache.service");
 const events_constants_1 = require("../events/events.constants");
 let RankingController = class RankingController {
     emitter;
-    constructor(emitter) {
+    cache;
+    constructor(emitter, cache) {
         this.emitter = emitter;
+        this.cache = cache;
     }
     sse(req) {
         return new rxjs_1.Observable((subscriber) => {
-            const handler = (payload) => {
-                subscriber.next({ data: payload });
-            };
+            const handler = (payload) => subscriber.next({ data: payload });
             this.emitter.on(events_constants_1.EVENTS.RANKING_UPDATED, handler);
             req.on('close', () => {
                 this.emitter.removeListener(events_constants_1.EVENTS.RANKING_UPDATED, handler);
                 subscriber.complete();
             });
         });
+    }
+    getRanking() {
+        return this.cache.getRanking();
+    }
+    seed(players) {
+        this.cache.setRanking(players);
+        return { ok: true, count: players.length };
     }
 };
 exports.RankingController = RankingController;
@@ -43,8 +51,22 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", rxjs_1.Observable)
 ], RankingController.prototype, "sse", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "getRanking", null);
+__decorate([
+    (0, common_1.Post)('seed'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "seed", null);
 exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)('ranking'),
-    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2])
+    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2,
+        ranking_cache_service_1.RankingCacheService])
 ], RankingController);
 //# sourceMappingURL=ranking.controller.js.map

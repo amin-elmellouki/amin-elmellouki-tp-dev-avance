@@ -9,10 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const event_emitter_1 = require("@nestjs/event-emitter");
+const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const ranking_events_service_1 = require("./events/ranking-events/ranking-events.service");
-const ranking_controller_1 = require("./ranking/ranking.controller");
+const ranking_module_1 = require("./ranking/ranking.module");
+const player_module_1 = require("./player/player.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -20,8 +22,16 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             event_emitter_1.EventEmitterModule.forRoot(),
+            ranking_module_1.RankingModule,
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'sqlite',
+                database: 'db.sqlite',
+                entities: [__dirname + '/**/*.entity{.ts,.js}'],
+                synchronize: true,
+            }),
+            player_module_1.PlayerModule,
         ],
-        controllers: [app_controller_1.AppController, ranking_controller_1.RankingController],
+        controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, ranking_events_service_1.RankingEventsService],
     })
 ], AppModule);
